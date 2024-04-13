@@ -7,6 +7,8 @@ bot = telebot.TeleBot(token)
 
 time = 5 
 
+WITH_ICON
+
 start = """You are READY?"""
 
 INF = """Information:
