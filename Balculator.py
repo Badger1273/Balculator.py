@@ -7,7 +7,7 @@ bot = telebot.TeleBot(token)
 
 time = 5 
 
-WITH_ICON
+icon = https://i.postimg.cc/7hphnvT0/Balculator.png
 
 start = """You are READY?"""
 
