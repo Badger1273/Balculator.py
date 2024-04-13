@@ -3,7 +3,7 @@ from telebot import types
 
 token = '' 
 name_bot = 'Balculator_Bot'
-bot = telebot.TeleBot(BOT_TOKEN)
+bot = telebot.TeleBot(token)
 
 time = 5 
 
