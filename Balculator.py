@@ -1,7 +1,7 @@
 import telebot, datetime, time, math, re
 from telebot import types
 
-token = '' 
+token = '6406711963:AAF6Z-wMINN7KJlnk0Vust0FJeFhLVTDc5o' 
 name_bot = 'Balculator_bot'
 bot = telebot.TeleBot(token)
 
