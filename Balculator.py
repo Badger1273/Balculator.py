@@ -1,13 +1,11 @@
 import telebot, datetime, time, math, re
 from telebot import types
 
-token = '6406711963:AAF6Z-wMINN7KJlnk0Vust0FJeFhLVTDc5o' 
+token = '6406711963:AAF6Z-wMINN7KJlnk0Vust0FJeFhLVTDc5o'
 name_bot = 'Balculator_bot'
 bot = telebot.TeleBot(token)
 
-time = 5 
-
-icon = https://i.postimg.cc/7hphnvT0/Balculator.png
+time = 5
 
 start = """You are READY?"""
 
@@ -17,8 +15,7 @@ INF = """Information:
     - - вычитание;
     \* - умножение;
     / - деление;
-    \*\* - возведение в степнь.
-    
+    ^ - возведение в степнь.
 Геометрические функции:
     cos(x) - косинус x;
     sin(x) - синус x;
@@ -38,7 +35,7 @@ INF = """Information:
     0ox - перевести восьмиричное число х в десятичное;
     0xx - перевести шестнадцатиричное число х в десятичное;"""
 
-pi = 3.141592653589793238462643 
+pi = 3.141592653589793238462643
 
 
 def fact(float_):
@@ -55,8 +52,8 @@ def sin(float_):
 
 def tg(float_):
     return math.tan(float_)
-   
-    
+
+
 def tan(float_):
     return math.tan(float_)
 
@@ -83,22 +80,22 @@ def exp(float_):
 
 @bot.message_handler(commands=['start', 'inf'])
 def send_start(message):
-    print('%s (%s): %s' %(message.chat.first_name, message.chat.username, message.text))
+    print('%s (%s): %s' % (message.chat.first_name, message.chat.username, message.text))
     msg = None
 
     if message.text.lower() == '/start':
-        msg = bot.send_message(message.chat.id, start/, parse_mode='markdown')
+        msg = bot.send_message(message.chat.id, start , parse_mode='markdown')
 
     elif message.text.lower() == '/inf':
         msg = bot.send_message(message.chat.id, INF, parse_mode='markdown')
-        
+
     if (msg):
-        print('Ботий: %s'%msg.text)
-        
-        
-@bot.message_handler(func = lambda message: True)
+        print('Ботий: %s' % msg.text)
+
+
+@bot.message_handler(func=lambda message: True)
 def answer_to_user(message):
-    print('%s (%s): %s' %(message.chat.first_name, message.chat.username, message.text))
+    print('%s (%s): %s' % (message.chat.first_name, message.chat.username, message.text))
     msg = None
 
     user_message = message.text.lower()
@@ -109,15 +106,15 @@ def answer_to_user(message):
         if regex.search(user_message) == None:
             return
 
-        regex = re.compile('%s[^a-z]'%(name_bot.lower()))
+        regex = re.compile('%s[^a-z]' % (name_bot.lower()))
         user_message = regex.sub("", user_message)
     user_message = user_message.lstrip()
     user_message = user_message.rstrip()
-    
-    print(user_message)
+
+    print('---', user_message)
 
     if user_message == 'start':
-        msg = bot.send_message(message.chat.id, '*Start, %s*'%(message.chat.first_name), parse_mode='markdown')
+        msg = bot.send_message(message.chat.id, '*Start, %s*' % (message.chat.first_name), parse_mode='markdown')
 
     elif user_message == 'inf':
         msg = bot.send_message(message.chat.id, INF, parse_mode='markdown')
@@ -126,7 +123,7 @@ def answer_to_user(message):
         try:
             answer = str(eval(user_message.replace(' ', '')))
             msg = bot.send_message(message.chat.id, user_message.replace(' ', '') + ' = ' + answer)
-                
+
         except SyntaxError:
             msg = bot.send_message(message.chat.id, 'ERROR \nИсравьте ошибку и повторите снова')
         except NameError:
@@ -137,9 +134,9 @@ def answer_to_user(message):
             msg = bot.send_message(message.chat.id, 'На 0 делить НЕЛЬЗЯ!!!. \nИсравьте ошибку и повторите снова')
 
     if (msg):
-        print('Ботий: %s'%msg.text)
-        
-        
+        print('Ботий: %s' % msg.text)
+
+
 @bot.inline_handler(func=lambda query: True)
 def inline_answer_to_user(inline_query):
     answer = 0
@@ -150,46 +147,50 @@ def inline_answer_to_user(inline_query):
         query_to_send = inline_query.query.replace('*', '\*').lower().replace(' ', '')
 
         answer_list.append(types.InlineQueryResultArticle(
-            id = 0,
-            title = 'Отправить с выражением',
+            id=0,
+            title='Отправить с выражением',
             description='%s = %s' % (inline_query.query, answer),
-            input_message_content = types.InputTextMessageContent(
-                message_text = '%s = *%s*' % (query_to_send, answer_to_send),
-                parse_mode = 'markdown'),
-            thumb_url = icon
+            input_message_content=types.InputTextMessageContent(
+                message_text='%s = *%s*' % (query_to_send, answer_to_send),
+                parse_mode='markdown'),
+            #thumb_url=icon
         ))
 
         answer_list.append(types.InlineQueryResultArticle(
-            id = 1,
-            title = 'Отправить без выражения',
+            id=1,
+            title='Отправить без выражения',
             description='%s' % (answer),
-            input_message_content = types.InputTextMessageContent(
-                message_text = '*%s*' % (answer_to_send),
-                parse_mode = 'markdown'),
-            thumb_url = nicon
+            input_message_content=types.InputTextMessageContent(
+                message_text='*%s*' % (answer_to_send),
+                parse_mode='markdown'),
+            #thumb_url=nicon
         ))
-            
-    except SyntaxError: answer = False
-    except NameError: answer = False
-    except TypeError: answer = False
-    except ZeroDivisionError: answer = False
-    
-    if (not answer):    
+
+    except SyntaxError:
+        answer = False
+    except NameError:
+        answer = False
+    except TypeError:
+        answer = False
+    except ZeroDivisionError:
+        answer = False
+
+    if (not answer):
         answer_list = []
         answer_list.append(types.InlineQueryResultArticle(
-            id = 0,
-            title = 'Балкулятор',
+            id=0,
+            title='Балкулятор',
             description='Введите выражение\nДля справки \"/inf\"',
-            input_message_content = types.InputTextMessageContent(message_text = 'Что-то здесь не так...')
+            input_message_content=types.InputTextMessageContent(message_text='Что-то здесь не так...')
         ))
-    
+
     bot.answer_inline_query(inline_query.id, answer_list)
-    
-    
+
+
 if (__name__ == '__main__'):
     while True:
         try:
             bot.polling(none_stop=True)
         except Exception as e:
-            print ('Настройка сети. Ожидайте... %s сек.'%time)
+            print('Настройка сети. Ожидайте... %s сек.' % time)
             time.sleep(time)
